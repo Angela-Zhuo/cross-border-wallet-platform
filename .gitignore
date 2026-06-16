@@ -1,0 +1,29 @@
+# Python
+
+__pycache__/
+
+*.pyc
+
+.env
+
+.venv/
+
+venv/
+
+# Node / Next.js
+
+frontend/node_modules/
+
+frontend/.next/
+
+frontend/out/
+
+frontend/.env.local
+
+# Docker
+
+*.log
+
+# Mac
+
+.DS_Store

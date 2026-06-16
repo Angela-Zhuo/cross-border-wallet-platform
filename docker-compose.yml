@@ -1,0 +1,33 @@
+services:
+  api:
+    build: ./backend
+    container_name: cbw_api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/code
+    environment:
+      DATABASE_URL: postgresql://cbw_user:cbw_password@postgres:5432/cbw_db
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17
+    container_name: cbw_postgres
+    environment:
+      POSTGRES_USER: cbw_user
+      POSTGRES_PASSWORD: cbw_password
+      POSTGRES_DB: cbw_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cbw_user -d cbw_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
